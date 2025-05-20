@@ -15,6 +15,9 @@ def build_model(X_train, num_classes):
         tf.keras.layers.Input(shape=(X_train.shape[1],)),
         tf.keras.layers.Dense(256, activation='sigmoid'),
         tf.keras.layers.Dense(128, activation='sigmoid'),
+        tf.keras.layers.Dense(256, activation='sigmoid'),
+        tf.keras.layers.Dense(128, activation='sigmoid'),
+        tf.keras.layers.Dense(128, activation='sigmoid'),
         tf.keras.layers.Dense(num_classes, activation='softmax')
     ])
 

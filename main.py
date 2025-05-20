@@ -12,6 +12,8 @@ from utils.metrics  import metrics
 from utils.build_model  import build_model, get_class_weights
 import sys
 from tensorflow.keras.callbacks import ModelCheckpoint, TensorBoard
+from utils.build_model  import build_model
+from utils.viz import matrix, plot_loss_acc
 
 data = load_data("data/WA_Fn-UseC_-Telco-Customer-Churn.csv")
 
@@ -56,7 +58,7 @@ def main():
         callbacks=[tensorboard_cb, checkpoint_cb]
     )
 
-    metrics(model, X_test_preprocessed, y_test, y_test_cat)
+    y_pred = metrics(model, X_test_preprocessed, y_test, y_test_cat)
 
     clf = LogisticRegression(class_weight='balanced')
     clf.fit(X_train_preprocessed, y_train)
@@ -64,6 +66,8 @@ def main():
 
     f1_baseline = f1_score(y_test, y_pred)
     print(f"Baseline Logistic Regression F1 : {f1_baseline:.4f}")
+    matrix(y_test, y_pred)
+    plot_loss_acc(history)
 
 
 if __name__ == "__main__":
