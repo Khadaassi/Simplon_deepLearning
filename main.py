@@ -1,12 +1,14 @@
 import numpy as np
-from sklearn.metrics import classification_report
 import tensorflow as tf
+import sys
+
+from sklearn.metrics import classification_report
 from utils.load_data import load_data
 from utils.preprocessor import preprocess_data
 from utils.build_pipeline import build_pipeline
 from utils.metrics  import metrics
 from utils.build_model  import build_model
-import sys
+from utils.viz import matrix, plot_loss_acc
 
 data = load_data("data/WA_Fn-UseC_-Telco-Customer-Churn.csv")
 
@@ -32,9 +34,11 @@ def main():
         verbose=1
     )
 
-    metrics(model, X_test_preprocessed, y_test, y_test_cat)
+    y_pred = metrics(model, X_test_preprocessed, y_test, y_test_cat)
 
 
+    matrix(y_test, y_pred)
+    plot_loss_acc(history)
 
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 
 def build_pipeline(dataframe: pd.DataFrame) :
     
-    y = dataframe['Churn'].map({"Yes": 1, "No": 0}) 
+    y = dataframe['Churn'].map({"Yes": 0, "No":1}) 
     dataframe = dataframe.drop(columns=["Churn"])
 
 
@@ -29,7 +29,7 @@ def build_pipeline(dataframe: pd.DataFrame) :
     # c) Colonnes numériques
     numeric_cols = dataframe.select_dtypes(include=["int64", "float64"]).columns.tolist()
 
-    X_train_0, X_test, y_train_0, y_test = train_test_split(dataframe, y, stratify=y, test_size=0.2, random_state=42)
+    X_train_0, X_test, y_train_0, y_test = train_test_split(dataframe, y, stratify=y, test_size=0.15, random_state=42)
 
     # On prend 20% de X_train pour validation
     X_train, X_val, y_train, y_val = train_test_split(

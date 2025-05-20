@@ -13,8 +13,9 @@ def build_model(X_train, num_classes):
     # et une couche de sortie avec activation softmax pour classification
     model = tf.keras.Sequential([
         tf.keras.layers.Input(shape=(X_train.shape[1],)),
-        tf.keras.layers.Dense(64, activation='relu'),
-        tf.keras.layers.Dense(64, activation='relu'),
+        tf.keras.layers.Dense(256, activation='sigmoid'),
+        tf.keras.layers.Dense(128, activation='sigmoid'),
+        tf.keras.layers.Dense(128, activation='sigmoid'),
         tf.keras.layers.Dense(num_classes, activation='softmax')
     ])
 

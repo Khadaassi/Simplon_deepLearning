@@ -1,8 +1,9 @@
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.metrics import confusion_matrix
 
 
-def confusion_matrix(y_test, y_pred):
+def matrix(y_test, y_pred):
 
     print("Matrice de Confusion :")
     cm = confusion_matrix(y_test, y_pred)
@@ -43,4 +44,6 @@ def plot_loss_acc(history, validation=True):
     plt.grid()
 
     plt.tight_layout()
-    plt.show()
+    plt.show(block=False)
+    plt.pause(5)
+    plt.close()
