@@ -12,9 +12,12 @@ def metrics(model, X_test, y_test, y_test_cat) -> None :
     print(classification_report(y_test, y_pred, target_names=['yes','no']))
 
     
+    print(model.predict(X_test).shape)
+    print(np.unique(y_test))  # Affiche l'ordre des classes
 
     # Probabilités pour la classe positive
     y_pred_proba = model.predict(X_test)[:, 1]
+    
     y_pred_label = (y_pred_proba >= 0.5).astype(int)
 
     roc_auc = roc_auc_score(y_test, y_pred_proba)

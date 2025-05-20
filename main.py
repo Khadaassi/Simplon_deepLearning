@@ -28,6 +28,7 @@ def main():
     [X_train_preprocessed, X_val_preprocessed, X_test_preprocessed, y_train, y_val, y_test] = build_pipeline(original_data)
 
     # Encodage des labels en one-hot
+    print("XXXX",y_train)
     y_train_cat = tf.keras.utils.to_categorical(y_train, 2)
     y_val_cat = tf.keras.utils.to_categorical(y_val, 2)
     y_test_cat  = tf.keras.utils.to_categorical(y_test,  2)
