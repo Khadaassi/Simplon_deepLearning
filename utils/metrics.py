@@ -1,16 +1,14 @@
-from sklearn.metrics import roc_auc_score, f1_score, recall_score
+import numpy as np
+from sklearn.metrics import classification_report, roc_auc_score, f1_score, recall_score
 
-def metrics(model, X_test, y_test) :
+def metrics(model, X_test, y_test, y_test_cat):
     
-    pred_y = model.predict(X_test)
-    pred_y_proba = model.predict_proba(X_test)[:, 1]
+    test_loss, test_acc = model.evaluate(X_test, y_test_cat, verbose=0)
+    print(f"\nAccuracy sur le test set : {test_acc:.4f}")
 
-    roc_auc = roc_auc_score(y_test, pred_y_proba)
-    f1 = f1_score(y_test, pred_y)
-    recall = recall_score(y_pred=pred_y, y_true=y_test)
+    y_pred_probs = model.predict(X_test)
+    y_pred = np.argmax(y_pred_probs, axis=1)
+    print("\nClassification Report :")
+    print(classification_report(y_test, y_pred, target_names=['yes','no']))
 
-    print(f"ROC AUC  : {roc_auc:.4f}")
-    print(f"F1 Score : {f1:.4f}")
-    print(f"Recall   : {recall:.4f}")
-
-    return roc_auc, f1, recall
+    return y_pred
