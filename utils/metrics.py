@@ -1,5 +1,5 @@
 import numpy as np
-from sklearn.metrics import classification_report, roc_auc_score, f1_score, recall_score
+from sklearn.metrics import classification_report, roc_auc_score, f1_score
 
 def metrics(model, X_test, y_test, y_test_cat):
     
@@ -11,4 +11,18 @@ def metrics(model, X_test, y_test, y_test_cat):
     print("\nClassification Report :")
     print(classification_report(y_test, y_pred, target_names=['yes','no']))
 
-    return y_pred
+    
+    print(model.predict(X_test).shape)
+    print(np.unique(y_test))  # Affiche l'ordre des classes
+
+    # Probabilités pour la classe positive
+    y_pred_proba = model.predict(X_test)[:, 1]
+    
+    y_pred_label = (y_pred_proba >= 0.5).astype(int)
+
+    roc_auc = roc_auc_score(y_test, y_pred_proba)
+    f1 = f1_score(y_test, y_pred_label)
+
+    print(f"ROC-AUC : {roc_auc:.4f}")
+    print(f"F1-score : {f1:.4f}")
+
