@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 
 def build_pipeline(dataframe: pd.DataFrame) :
     
-    y = dataframe['Churn'].map({"Yes": 1, "No": 0}) 
+    y = dataframe['Churn'].map({"Yes": 0, "No": 1}) 
     dataframe = dataframe.drop(columns=["Churn"])
 
 
