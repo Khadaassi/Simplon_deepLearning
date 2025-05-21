@@ -21,7 +21,7 @@ def matrix(y_test, y_pred, filename="confusion_matrix.png"):
     # Sauvegarde
     save_path = os.path.join(OUTPUT_DIR, filename)
     plt.savefig(save_path)
-    print(f"📁 Confusion matrix enregistrée dans : {save_path}")
+    print(f"Matrice de confussion enregistrée dans : {save_path}")
 
     plt.show(block=False)
     plt.pause(3)
@@ -60,7 +60,7 @@ def plot_loss_acc(history, validation=True, filename="training_curves.png"):
     # Sauvegarde
     save_path = os.path.join(OUTPUT_DIR, filename)
     plt.savefig(save_path)
-    print(f"📁 Graphique entraînement enregistré dans : {save_path}")
+    print(f"Graphique entraînement enregistré dans : {save_path}")
 
     plt.show(block=False)
     plt.pause(5)
