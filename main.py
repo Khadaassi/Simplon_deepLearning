@@ -63,7 +63,7 @@ def main():
     history = model.fit(
         X_train_preprocessed, y_train_cat,
         validation_data=(X_val_preprocessed, y_val_cat),
-        epochs=20, class_weight=class_weights,
+        epochs=10, class_weight=class_weights,
         batch_size=batch_size,
         verbose=1,
         callbacks=[tensorboard_cb, checkpoint_cb, early_stop_cb]
