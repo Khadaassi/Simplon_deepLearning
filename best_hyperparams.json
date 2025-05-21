@@ -1,0 +1,7 @@
+{
+    "num_layers": 1,
+    "units_0": 32,
+    "learning_rate": 0.004114773318984142,
+    "units_1": 192,
+    "units_2": 64
+}
