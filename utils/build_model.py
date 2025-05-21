@@ -6,21 +6,11 @@ import keras_tuner as kt
 def build_model(X_train, num_classes):
     model = tf.keras.Sequential([
         tf.keras.layers.Input(shape=(X_train.shape[1],)),
-<<<<<<< HEAD
-        tf.keras.layers.Dense(256, activation='relu'),
-        tf.keras.layers.Dense(128, activation='relu'),
-        tf.keras.layers.Dense(num_classes, activation='sigmoid')
-    ])
-
-
-    # Définition de la fonction de perte, de l'optimiseur et des métriques
-=======
         tf.keras.layers.Dense(128, activation='relu'),
         tf.keras.layers.Dense(64, activation='relu'),
         tf.keras.layers.Dense(num_classes, activation='softmax')
     ])
 
->>>>>>> origin/develop
     model.compile(
         optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
         loss='binary_crossentropy',

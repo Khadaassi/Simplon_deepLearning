@@ -28,15 +28,7 @@ def main():
     set_seed(42)
     original_data = preprocess_data(data)
 
-<<<<<<< HEAD
-    # Encodage des labels en one-hot
-    y_train_cat = tf.keras.utils.to_categorical(y_train, 2)
-    y_val_cat = tf.keras.utils.to_categorical(y_val, 2)
-    y_test_cat  = tf.keras.utils.to_categorical(y_test,  2)
-    y_train_cat[:5], y_val_cat[:5], y_test_cat[:5]
-=======
     X_train_preprocessed, X_val_preprocessed, X_test_preprocessed, y_train, y_val, y_test = build_pipeline(original_data)
->>>>>>> origin/develop
 
     num_classes = len(np.unique(y_train))
 
