@@ -8,10 +8,11 @@ from utils.load_data import load_data
 from utils.preprocessor import preprocess_data
 from utils.build_pipeline import build_pipeline
 from utils.metrics import metrics
-from utils.build_model import build_model, get_class_weights, run_hyperparameter_search
+from model.build_model import build_model, get_class_weights, run_hyperparameter_search
 from tensorflow.keras.callbacks import ModelCheckpoint, TensorBoard, EarlyStopping
 from utils.viz import matrix, plot_loss_acc
 import json
+import joblib
 
 data = load_data("data/WA_Fn-UseC_-Telco-Customer-Churn.csv")
 
@@ -28,7 +29,10 @@ def main():
     set_seed(42)
     original_data = preprocess_data(data)
 
-    X_train_preprocessed, X_val_preprocessed, X_test_preprocessed, y_train, y_val, y_test = build_pipeline(original_data)
+    X_train_preprocessed, X_val_preprocessed, X_test_preprocessed, y_train, y_val, y_test, preprocessor = build_pipeline(original_data)
+
+    # Sauvegarde du pipeline pour l'inférence
+    joblib.dump(preprocessor, "preprocessor.joblib")
 
     num_classes = len(np.unique(y_train))
 
@@ -42,7 +46,7 @@ def main():
         model, best_hps = run_hyperparameter_search(X_train_preprocessed, y_train_cat, X_val_preprocessed, y_val_cat, num_classes)
         print("Best hyperparameters:")
         print(best_hps.values)
-        batch_size = 16#32  # Par défaut 32
+        batch_size = 16
     else:
         model = build_model(X_train_preprocessed, num_classes)
         batch_size = 16
@@ -79,7 +83,6 @@ def main():
     matrix(y_test, y_pred_lr)
     plot_loss_acc(history)
 
-    # Sauvegarde du modèle et hyperparamètres (optionnel)
     if USE_TUNER:
         model.save("best_tuned_model.keras")
         with open("best_hyperparams.json", "w") as f:
