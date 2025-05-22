@@ -41,15 +41,14 @@ def main():
     y_test_cat = one_hot_labels(y_test, num_classes)
 
     class_weights = get_class_weights(y_train)
+    batch_size = 16
 
     if USE_TUNER:
         model, best_hps = run_hyperparameter_search(X_train_preprocessed, y_train_cat, X_val_preprocessed, y_val_cat, num_classes)
         print("Best hyperparameters:")
-        print(best_hps.values)
-        batch_size = 16
+        print(best_hps.values) 
     else:
         model = build_model(X_train_preprocessed, num_classes)
-        batch_size = 16
 
     log_dir = "logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     tensorboard_cb = TensorBoard(log_dir=log_dir, histogram_freq=1)

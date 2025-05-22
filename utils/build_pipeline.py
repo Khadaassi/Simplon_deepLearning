@@ -8,6 +8,9 @@ from sklearn.model_selection import train_test_split
 import joblib
 
 def build_pipeline(dataframe: pd.DataFrame):
+    """build_pipeline transforme les données et divise la base initiale en 
+        entrainement, validation et test.
+    """
     y = dataframe['Churn'].map({"Yes": 0, "No": 1})
     dataframe = dataframe.drop(columns=["Churn"])
 
@@ -26,21 +29,25 @@ def build_pipeline(dataframe: pd.DataFrame):
     X_train_0, X_test, y_train_0, y_test = train_test_split(dataframe, y, stratify=y, test_size=0.2, random_state=42)
     X_train, X_val, y_train, y_val = train_test_split(X_train_0, y_train_0, test_size=0.2, random_state=42, stratify=y_train_0)
 
+    #remplacer les données manquantes par la valeur la plus fréuente puis appliquer un ordinal encoder
     binary_pipeline = Pipeline([
         ("imputer", SimpleImputer(strategy="most_frequent")),
         ("encoder", OrdinalEncoder(categories=[["No", "Yes"]]*len(binary_cols)))
     ])
 
+    #remplacer les données manquantes par la valeur la plus fréuente puis appliquer un one hot encoder
     multi_cat_pipeline = Pipeline([
         ("imputer", SimpleImputer(strategy="most_frequent")),
         ("encoder", OneHotEncoder(handle_unknown="ignore", sparse_output=False))
     ])
 
+    #remplacer les données manquantes par la valeur médianne puis appliquer une normalization z = (x - u) / s
     numeric_pipeline = Pipeline([
         ("imputer", SimpleImputer(strategy="median")),
         ("scaler", StandardScaler())
     ])
 
+    #construire le preprocessor
     preprocessor = ColumnTransformer([
         ("bin", binary_pipeline, binary_cols),
         ("cat", multi_cat_pipeline, multi_cat_cols),
